@@ -30,3 +30,19 @@
 *.exe
 *.out
 *.app
+
+*x64
+*Debug
+*.vs
+
+bin/
+obj/
+# *.exe
+# *.dll
+# *.pdb
+# *.cache
+# *.log
+# *.user
+# *.suo
+# *.userosscache
+# *.sln.docstates
