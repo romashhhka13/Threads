@@ -1,20 +1,21 @@
 ﻿#include <vector>
-#include <conio.h>
+#include <thread>
+#include <fstream>
+#include <mutex>
+
 #include "Session.h"
 #include "SysProg.h"
+#include "lib.h"
 
 
 using namespace std;
 
 
-//#ifdef _DEBUG
-//#define new DEBUG_NEW
-//#endif
+mutex m;
 
 
-DWORD WINAPI MyThread(LPVOID lpParam)
+int MyThread(Session* session)
 {
-    auto session = static_cast<Session*>(lpParam);
     SafeWrite("session", session->sessionID, "created");
 
     while (true)
@@ -33,44 +34,50 @@ DWORD WINAPI MyThread(LPVOID lpParam)
             case MT_DATA:
             {
                 SafeWrite("session", session->sessionID, "data", m.data);
-                Sleep(500 * session->sessionID);
+                wofstream file(L".data\\" + to_wstring(session->sessionID) + L".txt", std::ios::app);
+                file.imbue(std::locale(".1251"));
+                file << m.data << endl;
                 break;
             }
             }
         }
     }
 
-	return 0;
+    return 0;
 }
-
 
 void start()
 {
     vector<Session*> sessions;
     int threads_num = 0;
 
+    HANDLE hMutex = CreateMutex(NULL, FALSE, L"hMutex");
+
     HANDLE hStartEvent = CreateEvent(NULL, FALSE, FALSE, L"StartEvent");
     HANDLE hStopEvent = CreateEvent(NULL, FALSE, FALSE, L"StopEvent");
     HANDLE hConfirmEvent = CreateEvent(NULL, FALSE, FALSE, L"ConfirmEvent");
     HANDLE hExitEvent = CreateEvent(NULL, FALSE, FALSE, L"ExitEvent");
-    HANDLE hControlEvents[3] = { hStartEvent, hStopEvent, hExitEvent };
+    HANDLE hGetMessageEvent = CreateEvent(NULL, FALSE, FALSE, L"hGetMessageEvent");
+    HANDLE hControlEvents[4] = { hStartEvent, hStopEvent, hExitEvent, hGetMessageEvent };
 
     SetEvent(hConfirmEvent); 
 
     while (threads_num + 1)
     {
-        int n = WaitForMultipleObjects(3, hControlEvents, FALSE, INFINITE) - WAIT_OBJECT_0;
+        int n = WaitForMultipleObjects(4, hControlEvents, FALSE, INFINITE) - WAIT_OBJECT_0;
         switch (n)
         {
         case 0:
-
+        {
             sessions.push_back(new Session(threads_num));
-            CloseHandle(CreateThread(NULL, 0, MyThread, (LPVOID)sessions.back(), 0, NULL));
+            thread t(MyThread, sessions.back());
+            t.detach();
             SetEvent(hConfirmEvent);
             threads_num++;
             break;
-
+        }
         case 1:
+        {
             if (threads_num == 0) {
                 threads_num = -1;
                 SetEvent(hConfirmEvent);
@@ -80,12 +87,36 @@ void start()
             sessions.pop_back();
             SetEvent(hConfirmEvent);
             break;
+        }
         case 2:
+        {
             threads_num = -1;
             for (auto& session : sessions)
                 delete session;
             SetEvent(hConfirmEvent);
             break;
+        }
+        case 3:
+        {
+            header h;
+            WaitForSingleObject(hMutex, INFINITE);
+            wstring s = mapreceive(h);
+            ReleaseMutex(hMutex);
+
+            if (h.addr == -2) {
+                SafeWrite(s);
+            }
+            else if (h.addr == -1)
+                for (auto session : sessions) {
+                    session->addMessage(MT_DATA, s);
+                    
+                }
+            else {
+                sessions[h.addr]->addMessage(MT_DATA, s);
+            }
+            SetEvent(hConfirmEvent);
+            break;
+        }
         }
     }
 }
@@ -93,6 +124,8 @@ void start()
 
 int main()
 {
+    std::wcin.imbue(std::locale("rus_rus.866"));
+    std::wcout.imbue(std::locale("rus_rus.866"));
     start();
     return 0;
 }

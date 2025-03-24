@@ -1,16 +1,10 @@
-using System.Runtime.InteropServices;
-
-namespace LR1_Ilichev
+namespace LR2SharpIlichev
 {
     internal static class Program
     {
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-
-        [DllImport("DLLIlichev.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-        public static extern IntPtr mapsend(int addr, string str);
-
         [STAThread]
         static void Main()
         {

@@ -3,12 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LR1Sharp", "LR1Sharp.csproj", "{F4185D70-BEA2-4BF1-BB7F-17C4DFA0062B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C#Ilichev", "C#Ilichev.csproj", "{F4185D70-BEA2-4BF1-BB7F-17C4DFA0062B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0B9BF677-A99D-4608-858C-77F55A327AA0} = {0B9BF677-A99D-4608-858C-77F55A327AA0}
+		{A12E1493-4231-49E4-BFCA-710E4697944D} = {A12E1493-4231-49E4-BFCA-710E4697944D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LR1", "..\LR1\LR1.vcxproj", "{0B9BF677-A99D-4608-858C-77F55A327AA0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "C++Ilichev", "..\LR1\LR1.vcxproj", "{0B9BF677-A99D-4608-858C-77F55A327AA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A12E1493-4231-49E4-BFCA-710E4697944D} = {A12E1493-4231-49E4-BFCA-710E4697944D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLLIlichev", "..\DLLIlichev\DLLIlichev.vcxproj", "{A12E1493-4231-49E4-BFCA-710E4697944D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +50,18 @@ Global
 		{0B9BF677-A99D-4608-858C-77F55A327AA0}.Release|x64.Build.0 = Release|x64
 		{0B9BF677-A99D-4608-858C-77F55A327AA0}.Release|x86.ActiveCfg = Release|Win32
 		{0B9BF677-A99D-4608-858C-77F55A327AA0}.Release|x86.Build.0 = Release|Win32
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Debug|Any CPU.Build.0 = Debug|x64
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Debug|x64.ActiveCfg = Debug|x64
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Debug|x64.Build.0 = Debug|x64
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Debug|x86.ActiveCfg = Debug|Win32
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Debug|x86.Build.0 = Debug|Win32
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Release|Any CPU.ActiveCfg = Release|x64
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Release|Any CPU.Build.0 = Release|x64
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Release|x64.ActiveCfg = Release|x64
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Release|x64.Build.0 = Release|x64
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Release|x86.ActiveCfg = Release|Win32
+		{A12E1493-4231-49E4-BFCA-710E4697944D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using System.Net.Sockets;
 
 namespace LR1_Ilichev
 {
@@ -12,6 +14,8 @@ namespace LR1_Ilichev
         System.Threading.EventWaitHandle startEvent = new EventWaitHandle(false, EventResetMode.AutoReset, "StartEvent");
         System.Threading.EventWaitHandle confirmEvent = new EventWaitHandle(false, EventResetMode.AutoReset, "ConfirmEvent");
         System.Threading.EventWaitHandle exitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, "ExitEvent");
+        System.Threading.Mutex mutex = new Mutex(false, "hMutex");
+
 
         public Form1()
         {
@@ -22,7 +26,7 @@ namespace LR1_Ilichev
         {
             if (childProcess == null || childProcess.HasExited)
             {
-                childProcess = Process.Start("LR1.exe");
+                childProcess = Process.Start("C++Ilichev.exe");
                 childProcess.EnableRaisingEvents = true;
 
                 childProcess.Exited += (sender, e) =>
@@ -33,6 +37,7 @@ namespace LR1_Ilichev
                 confirmEvent.WaitOne();
                 listBox.Items.Add("Главный поток - main()");
                 listBox.Items.Add("Все потоки");
+                listBox.SetSelected(1, true);
                 threads_num = 0;
             }
             else
@@ -65,6 +70,18 @@ namespace LR1_Ilichev
                 exitEvent.Set();
                 confirmEvent.WaitOne();
             }
+        }
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            int addr = listBox.SelectedIndex;
+            if (addr == -1)
+                return;
+            string mess = inputBox.Text;
+            mutex.WaitOne();
+            Program.mapsend(addr - 2, mess);
+            mutex.ReleaseMutex();
+            confirmEvent.WaitOne();
         }
     }
 }
