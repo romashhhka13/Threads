@@ -1,6 +1,7 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace LR1_Ilichev
+namespace IlichevNamaspace
 {
     internal static class Program
     {
@@ -8,10 +9,7 @@ namespace LR1_Ilichev
         ///  The main entry point for the application.
         /// </summary>
 
-        [DllImport("DLLIlichev.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-        public static extern IntPtr mapsend(int addr, string str);
 
-        [STAThread]
         static void Main()
         {
             // To customize application configuration such as set high DPI settings or default font,

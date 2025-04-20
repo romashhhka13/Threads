@@ -1,4 +1,4 @@
-﻿namespace LR1_Ilichev
+﻿namespace IlichevNamaspace
 {
     partial class Form1
     {
