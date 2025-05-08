@@ -35,14 +35,8 @@
 *Debug
 *.vs
 
+*.hint
+
 bin/
 obj/
-# *.exe
-# *.dll
-# *.pdb
-# *.cache
-# *.log
-# *.user
-# *.suo
-# *.userosscache
-# *.sln.docstates
+

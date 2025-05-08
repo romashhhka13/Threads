@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using static IlichevNamaspace.Form1;
+using System.Windows.Forms;
 
 namespace IlichevNamaspace
 {
@@ -8,7 +10,6 @@ namespace IlichevNamaspace
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-
 
         static void Main()
         {

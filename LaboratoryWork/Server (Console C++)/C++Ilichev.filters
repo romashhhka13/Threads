@@ -18,6 +18,9 @@
     <ClCompile Include="LR1.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\DLL\Message.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Session.h">
@@ -26,7 +29,7 @@
     <ClInclude Include="SysProg.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="..\LR2DLLIlichev\mydll.h">
+    <ClInclude Include="..\DLL\mydll.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
