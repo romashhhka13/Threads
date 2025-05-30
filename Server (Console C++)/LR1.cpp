@@ -18,10 +18,10 @@ map<int, shared_ptr<Session>> sessions;
 
 void cleanupInactiveSessions()
 {
-    const auto timeout = chrono::seconds(4);
+    const auto timeout = chrono::seconds(5);
     while (true)
     {
-        this_thread::sleep_for(chrono::seconds(2));
+        this_thread::sleep_for(chrono::seconds(1));
 
         auto now = clock_type::now();
         vector<int> expired;
@@ -35,7 +35,7 @@ void cleanupInactiveSessions()
         for (int id : expired)
         {
             sessions.erase(id);
-            SafeWrite(L"Клиент#", id, L"отключён (просрочен таймаут)");
+            SafeWrite(L"Клиент#", id, L"отключен по таймауту");
 
             for (auto& [sess_id, sess] : sessions)
             {
@@ -75,7 +75,7 @@ void processClient(tcp::socket s)
             break;
         }
 
-        /*case MT_EXIT:
+        case MT_EXIT:
         {
             auto iSession = sessions.find(m.header.from);
             if (iSession != sessions.end())
@@ -94,7 +94,7 @@ void processClient(tcp::socket s)
                 Message::send(s, m.header.from, MR_BROKER, MT_NODATA);
             }
             break;
-        }*/
+        }
 
         case MT_GETDATA:
         {
